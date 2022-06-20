@@ -1,5 +1,24 @@
+use std::collections::HashMap;
+
 fn main() {
-    println!("Hello, world!");
+    let mut school = School::new();
+    println!("{:?}", school);
+
+    school.add(2,"Lee");
+    println!("{:?}",school.grades());
+    school.add(5,"Nancy");
+    println!("{:?}",school.grades());
+
+
+    let mut school = School::new();
+
+    school.add(4, "Bob");
+    school.add(5, "Tom");
+    school.add(4, "Alice");
+
+    println!("{:?}", school);
+
+    println!("{:?}", school.grade(4));
 }
 
 
@@ -76,37 +95,50 @@ fn main() {
 /*-----------------------------*/
 
 // Sườn thông tin cho mọi người dễ làm
-
-
-
+#[derive(Debug)]
 pub struct School {
     // !TODO
+    students: HashMap<String, u32>,
 }
 
 impl School {
     pub fn new() -> School {
-        unimplemented!()
-
+        School {
+            students: HashMap::new(),
+        }
     }
 
     pub fn add(&mut self, grade: u32, student: &str) {
-        unimplemented!()
-
-        
+        self.students.insert(student.to_string(), grade);
     }
 
     pub fn grades(&self) -> Vec<u32> {
-        unimplemented!()
+        let mut vec_t = Vec::new();
+        for i in self.students.iter() {
+            if !vec_t.contains(i.1) {
+                vec_t.push(*i.1);
+            }
+        };
 
+        vec_t.sort();
+        vec_t
     }
 
 
     pub fn grade(&self, grade: u32) -> Vec<String> {
-        unimplemented!()
+        let mut vec_s = Vec::new();
+        for i in self.students.iter() {
+            if !vec_s.contains(i.0) && i.1 == &grade {
+                vec_s.push(i.0.to_string());
+            }
+        };
 
-        
+        vec_s.sort();
+        vec_s
     }
 }
+
+
 
 
 
